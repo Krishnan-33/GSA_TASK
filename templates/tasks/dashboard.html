@@ -1,0 +1,22 @@
+{% comment %} {% extends 'base.html' %} {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <h2>Dashboard</h2>
+    <a href="{% url 'create_task' %}">Create Task</a>
+    <a href="{% url 'view_tasks' %}">View All Tasks</a>
+    <h3>My Tasks</h3>
+    <ul>
+        {% for task in tasks %}
+            <li>{{ task.name }} - {{ task.date_time }} - {{ task.status }}</li>
+        {% endfor %}
+    </ul>
+    {% endblock %}
+</body>
+</html>

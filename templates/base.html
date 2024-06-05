@@ -1,0 +1,112 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Application</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body class="base_after_body">
+
+    <div class="page">
+        <!-- sidemenu HTML -->
+        <div class="sidemenu_div white_bg" id="sidemenu_wrapper">
+            <div class="logo_con d-flex align-items-center">
+                <img src="{% if org_instance_logo %}{% static org_instance_logo %}{% else %}{% static '/images/logo.svg' %}{% endif %}" alt="logo" class="img-fluid web_View" id ="primary_logo" style="{% if primary_logo_width %}width:{{primary_logo_width}}px;{% endif %}{% if primary_logo_height %}height:{{primary_logo_height}}px;{% endif %}">
+            </div>
+
+            <!-- menu list HTML -->
+            <ul class="sidemenu_ul">
+               <li><a class="dropdown-item {% block bias_allocation %}{% endblock %}" href="{% url 'dashboard' %}">Dashboard</a></li>
+            </ul>
+            <!-- menu list HTML  Ends -->
+        </div>
+        <!-- sidemenu HTML - Ends -->
+        <div class="page_container">
+            <!-- header HTML -->
+            <header class="white_bg resp-topnav" id="header_body">
+                <div class="container-fluid">
+                    <div class="row align-items-center resp-header">
+                        <div class="col-4 col-md-6 d-flex">
+                            <img src="{% static '/images/justify.svg' %}" alt="justify_icon" class="img-fluid icon_before_heading">
+                            <div class="hide_on_mobile_view">
+                                <h1 class="page_heading m-0 primary_page_heading">{% block page_heading_text %}{% endblock %}</h1>
+                            </div>
+                        </div>
+                         <div class="col-8 col-md-6 justify-content-end">
+                            <ul class="d-flex align-items-center justify-content-end">
+                                
+                                <li class="dropdown ml_20">
+                                    <div class="profile_blk cursor-pointer d-flex align-items-center"
+                                        data-bs-toggle="dropdown" aria-labelledby="profileDropdown">
+                                        <img src="{{request.user.id}}" alt="header_profile_icon"
+                                            class="img-fluid profile_img">
+                                        <span class="profile_name d-block text_black font_13 fw-semi">{{request.user.first_name}} {{request.user.last_name}}</span>
+                                        <img src="{% static '/images/pro_drop_down.svg' %}" alt="pro_drop_down" class="img-fluid">
+                                    </div>
+                                    <ul class="dropdown-menu" id="profileDropdown">
+                                        <li class="dropdown-item"><a href="">Logout</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                      
+                    </div>
+                </div>
+            </header>
+            <!-- header HTML - Ends -->
+		
+        <div class="page_body"  id="page_body_extend">
+        <!-- main HTML -->
+            {% block content %}
+            {% endblock %}
+        <!-- main HTML - Ends  -->
+        </div>
+        </div>
+    </div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+
+<!-- Popup to show success msg  (Start) -->
+<div class="modal fade success_popup_modal" id="succs_succ" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <span data-bs-dismiss="modal" aria-label="Close" class="d-flex dashcross_span">&times;</span>
+            <div class="modal-body d-flex flex-column align-items-center justify-content-center">
+                <img src="{% static '/images/success_tick.gif' %}" alt="success_tick" class="img-fluid mb_10">
+                <h3 class="page_heading mb_8">Success</h3>
+                <span class="d-block font_14 text_black fw-normal mb_30" id="change_msg"></span>
+                <button class="btn-primary" data-bs-dismiss="modal" aria-label="Close" type="button">Continue</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Popup to show success msg (End) -->
+
+<!-- Popup to show error msg  (Start) -->
+<div class="modal fade success_popup_modal" id="error_pop" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <span data-bs-dismiss="modal" aria-label="Close" class="d-flex dashcross_span">&times;</span>
+            <div class="modal-body d-flex flex-column align-items-center justify-content-center">
+                <img src="{% static '/images/error_icon.svg' %}" alt="success_tick" class="img-fluid mb_10">
+                <h3 class="page_heading mb_8">Error</h3>
+                <span class="d-block font_14 text_black fw-normal mb_30" id="change_error_msg"></span>
+                <button class="btn-primary" data-bs-dismiss="modal" aria-label="Close" type="button">Continue</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Popup to show error msg (End) -->
+
+
+</html>
+
